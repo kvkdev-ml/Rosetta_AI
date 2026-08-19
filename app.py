@@ -3,15 +3,13 @@ from flask import request,jsonify
 from flask.templating import render_template
 from ollama import Client,generate
 import os as os
-from typing import List
-from pydantic import BaseModel,Field
 app=Flask(__name__)
-'''client = Client(
+client = Client(
     host='https://ollama.com',
     headers={'Authorization': 'Bearer ' + os.environ.get('OLLAMA_API_KEY')}
-)'''
+)
 def check_code(code_snippet:str | None=None,model:str='gpt-oss:120b-cloud'):
-    response = generate(model=f'{model}',prompt=f"""
+    response = client.enerate(model=f'{model}',prompt=f"""
     Detect whether the give snippet is a programming language or not.
     Return ONLY true if yes otherwise no and if nothing is given then return None.
     Do not explain anything.
