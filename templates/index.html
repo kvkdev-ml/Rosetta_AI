@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CodeMorph - AI-Powered Code Converter</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#adc6ff",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary": "#003824",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary-container": "#00311f",
+                        "on-tertiary-container": "#3e2400",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-error": "#690005",
+                        "on-primary-container": "#00285d",
+                        "surface-container": "#171f33",
+                        "outline": "#8c909f",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#00a572",
+                        "inverse-on-surface": "#283044",
+                        "background": "#0b1326",
+                        "surface": "#0b1326",
+                        "tertiary": "#ffb95f",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary": "#472a00",
+                        "on-surface-variant": "#c2c6d6",
+                        "surface-container-low": "#131b2e",
+                        "surface-dim": "#0b1326",
+                        "surface-container-lowest": "#060e20",
+                        "secondary": "#4edea3",
+                        "primary-fixed": "#d8e2ff",
+                        "outline-variant": "#424754",
+                        "on-surface": "#dae2fd",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-primary": "#005ac2",
+                        "primary-container": "#4d8eff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#ca8100",
+                        "surface-variant": "#2d3449",
+                        "inverse-surface": "#dae2fd",
+                        "on-primary-fixed": "#001a42",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-bright": "#31394d",
+                        "on-background": "#dae2fd",
+                        "on-primary": "#002e6a",
+                        "surface-container-highest": "#2d3449",
+                        "tertiary-fixed": "#ffddb8",
+                        "primary": "#adc6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xs": "8px",
+                        "lg": "24px",
+                        "container-max": "1440px",
+                        "sm": "12px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-md": [
+                            "Inter"
+                        ],
+                        "label-sm": [
+                            "Inter"
+                        ],
+                        "body-lg": [
+                            "Inter"
+                        ],
+                        "headline-lg": [
+                            "Inter"
+                        ],
+                        "code-label": [
+                            "JetBrains Mono"
+                        ],
+                        "body-md": [
+                            "Inter"
+                        ],
+                        "code-block": [
+                            "JetBrains Mono"
+                        ]
+                    },
+                    "fontSize": {
+                        "headline-md": [
+                            "24px",
+                            {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "label-sm": [
+                            "12px",
+                            {
+                                "lineHeight": "16px",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "body-lg": [
+                            "16px",
+                            {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "headline-lg": [
+                            "32px",
+                            {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "code-label": [
+                            "12px",
+                            {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "body-md": [
+                            "14px",
+                            {
+                                "lineHeight": "20px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "code-block": [
+                            "14px",
+                            {
+                                "lineHeight": "22px",
+                                "fontWeight": "400"
+                            }
+                        ]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .inner-glow {
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, theme('colors.primary'), theme('colors.primary-fixed'));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+    <!-- TopNavBar -->
+    <nav
+        class="bg-background border-b border-outline-variant sticky top-0 z-50 flex justify-between items-center px-lg py-md max-w-container-max mx-auto full-width top-0">
+        <div class="flex items-center gap-xl">
+            <a class="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-2" href="#">
+                <span class="material-symbols-outlined text-primary" data-icon="transform">transform</span>
+                CodeMorph
+            </a>
+            <div class="hidden md:flex items-center gap-lg">
+                <a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200"
+                    href="https://kvk-profile-nu.vercel.app/" target="_blank">About Developer</a>
+                <a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200"
+                    href="https://github.com/kvkdev-ml" target="_blank">Developer Github</a>
+                <a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200"
+                    href="https://www.linkedin.com/in/vishal-kumar-95b269390" target="_blank">Linked IN</a>
+                <a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200"
+                    href="/download_resume" target="_blank">Resume</a>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow flex flex-col">
+        <!-- Hero Section -->
+        <section
+            class="px-lg py-24 md:py-32 max-w-container-max mx-auto w-full flex flex-col md:flex-row items-center gap-16">
+            <div class="flex-1 flex flex-col gap-8">
+                <div class="flex flex-col gap-4">
+                    <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">AI-Powered
+                        Translation</span>
+                    <h1 class="font-headline-lg text-headline-lg text-on-surface max-w-2xl leading-tight">
+                        Morph Code Across Languages <span class="text-gradient">Instantly.</span>
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        The AI-powered code converter designed for modern development workflows. Translate Python,
+                        TypeScript, Rust, and more with context-aware precision.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="/CodeMorpher">
+                        <button
+                            class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-sm text-label-sm hover:brightness-110 transition-all duration-200 active:scale-95 shadow-sm inner-glow flex items-center gap-2">
+                            Get Started for Free
+                            <span class="material-symbols-outlined text-sm"
+                                data-icon="arrow_forward">arrow_forward</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="flex-1 w-full max-w-lg md:max-w-none relative">
+                <!-- Abstract visual representation -->
+                <div
+                    class="relative w-full aspect-video rounded-xl bg-surface border border-outline-variant shadow-2xl overflow-hidden inner-glow">
+                    <img alt="CodeMorph illustration showing code transformation"
+                        class="w-full h-full object-cover opacity-80 mix-blend-screen"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfVVoXW-Tf9IvmRZ51DLqdu6EQn8lg78-rMg-bPlIT18OrPGSecjNDSzzuXHMocLRc4c1_9c5z6A8xTUHrMLqlDZV3Z21_Q43NICsFs_rlMhxrERfv5P-aqTrXFpBxSjc4-tWvp6qcswE9YJEBqIY0WU24cK0GgiUCag8-sLdkATXmpoY78WDuhenoE24O_7VnWWAX1p-LETURzX86r47YkQ8SEFBlWf0TTMUtoi0KGm0yeEWY9vIGWg" />
+                    <!-- Decorative elements simulating an IDE overlay -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Value Proposition (Bento Grid) -->
+        <section class="py-24 px-lg max-w-container-max mx-auto w-full flex flex-col gap-12">
+            <div class="text-center flex flex-col gap-4 max-w-2xl mx-auto">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">Built for Precision and Speed</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant">CodeMorph doesn't just do regex
+                    replacements; it understands the deep semantics of your codebase.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div
+                    class="bg-surface border border-outline-variant rounded-xl p-8 flex flex-col gap-4 inner-glow hover:border-primary/50 transition-colors duration-300">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary mb-2 border border-primary/20">
+                        <span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                    </div>
+                    <h3 class="font-headline-md text-lg text-on-surface">Context-Aware Translation</h3>
+                    <p class="font-body-md text-on-surface-variant leading-relaxed">AI that understands logic,
+                        architecture, and idiomatic patterns, not just basic syntax mapping.</p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="bg-surface border border-outline-variant rounded-xl p-8 flex flex-col gap-4 inner-glow hover:border-primary/50 transition-colors duration-300">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary mb-2 border border-primary/20">
+                        <span class="material-symbols-outlined" data-icon="language">language</span>
+                    </div>
+                    <h3 class="font-headline-md text-lg text-on-surface">Multi-Language Support</h3>
+                    <p class="font-body-md text-on-surface-variant leading-relaxed">Native support for 20+ languages
+                        including Rust, Go, Kotlin, TypeScript, and Python with more added monthly.</p>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="bg-surface border border-outline-variant rounded-xl p-8 flex flex-col gap-4 inner-glow hover:border-primary/50 transition-colors duration-300">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary mb-2 border border-primary/20">
+                        <span class="material-symbols-outlined"
+                            data-icon="integration_instructions">integration_instructions</span>
+                    </div>
+                    <h3 class="font-headline-md text-lg text-on-surface">IDE Integration</h3>
+                    <p class="font-body-md text-on-surface-variant leading-relaxed">Seamlessly connect with VS Code,
+                        IntelliJ, and JetBrains environments via our official extensions.</p>
+                </div>
+            </div>
+        </section>
+        <!-- How It Works Section -->
+        <section class="py-24 px-lg bg-surface-container-low border-y border-outline-variant">
+            <div class="max-w-container-max mx-auto w-full flex flex-col gap-16">
+                <div class="text-center flex flex-col gap-4 max-w-2xl mx-auto">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface">Workflow Simplified</h2>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant">Transforming legacy systems or
+                        migrating stacks is now a matter of minutes, not months.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                    <!-- Connecting line for desktop -->
+                    <div
+                        class="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-outline-variant -z-10 -translate-y-1/2">
+                    </div>
+                    <div class="flex flex-col items-center text-center gap-4 bg-surface-container-low p-6 z-10">
+                        <div
+                            class="w-16 h-16 rounded-full bg-surface border border-outline-variant flex items-center justify-center font-headline-md text-xl text-primary inner-glow">
+                            1</div>
+                        <h4 class="font-headline-md text-lg text-on-surface">Paste &amp; Analyze</h4>
+                        <p class="font-body-md text-on-surface-variant">Input your source code. CodeMorph instantly
+                            builds an Abstract Syntax Tree.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center gap-4 bg-surface-container-low p-6 z-10">
+                        <div
+                            class="w-16 h-16 rounded-full bg-surface border border-outline-variant flex items-center justify-center font-headline-md text-xl text-primary inner-glow">
+                            2</div>
+                        <h4 class="font-headline-md text-lg text-on-surface">Configure Target</h4>
+                        <p class="font-body-md text-on-surface-variant">Select target language, preferred paradigms
+                            (e.g., functional vs OOP), and strictness.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center gap-4 bg-surface-container-low p-6 z-10">
+                        <div
+                            class="w-16 h-16 rounded-full bg-surface border border-outline-variant flex items-center justify-center font-headline-md text-xl text-primary inner-glow">
+                            3</div>
+                        <h4 class="font-headline-md text-lg text-on-surface">Convert &amp; Review</h4>
+                        <p class="font-body-md text-on-surface-variant">Get idiomatic output instantly. Review
+                            line-by-line diffs before committing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Final CTA -->
+        <section
+            class="py-32 px-lg max-w-container-max mx-auto w-full flex flex-col items-center text-center gap-8 relative overflow-hidden">
+            <!-- Background Glow -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none">
+            </div>
+            <h2 class="font-headline-lg text-4xl md:text-5xl font-bold text-on-surface max-w-3xl leading-tight">
+                Ready to modernize your codebase?
+            </h2>
+            <p class="font-body-lg text-xl text-on-surface-variant">
+                Join 50,000+ developers using CodeMorph today.
+            </p>
+            <div class="mt-4">
+                <a href="/CodeMorpher">
+                    <button
+                        class="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline-md text-base hover:brightness-110 transition-all duration-200 active:scale-95 shadow-[0_0_20px_rgba(173,198,255,0.2)] inner-glow flex items-center gap-2">
+                        Start Converting Now
+                        <span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+                    </button>
+                </a>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer
+        class="bg-surface-container-lowest border-t border-outline-variant w-full px-lg py-xl flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto">
+        <div class="font-headline-md text-headline-md font-bold text-on-surface mb-4 md:mb-0">
+            CodeMorph
+        </div>
+        <div class="font-label-sm text-label-sm text-secondary">
+            © 2026 CodeMorph AI. All rights reserved.
+        </div>
+    </footer>
+</body>
+
+</html>
