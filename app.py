@@ -48,4 +48,5 @@ def code_morpher():
             additional_ip=data.get('additional_ip')
             return jsonify({"response":1,'valid_code':'valid','output_code':generate_code(target_lang=target_language,initial_code=code,additionnal_prompt=additional_ip)})
     return jsonify({"response":0})
-app.run(debug=True,port=2022)
+if __name__=='__main__':
+    app.run()
