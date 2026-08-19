@@ -4,16 +4,13 @@ from flask.templating import render_template
 from google.genai import Client
 import os as os
 app=Flask(__name__)
-client = Client(
-    host='https://ollama.com',
-    headers={'Authorization': 'Bearer ' + os.environ.get('OLLAMA_API_KEY')}
-)
-def check_code(code_snippet:str | None=None,model:str='gpt-oss:120b-cloud'):
-    response = client.enerate(model=f'{model}',prompt=f"""
-    Detect whether the give snippet is a programming language or not.
-    Return ONLY true if yes otherwise no and if nothing is given then return None.
-    Do not explain anything.
-    Code:{code_snippet}
+client=Client(api_key=os.getenv('ROSETTA_API_KEY'))
+def check_code(code_snippet:str | None=None,model:str='gemini-3.6-flash'):
+    response = client.models.generate_content(model=f'{model}',contents=f"""
+Detect whether the give snippet is a programming language or not.
+Return ONLY true if yes otherwise no and if nothing is given then return None.
+Do not explain anything.
+Code:{code_snippet}
     """)
     return response.text
 def generate_code(target_lang:str,initial_code:str,additionnal_prompt:str | None='No additional info'):
@@ -51,5 +48,4 @@ def code_morpher():
             additional_ip=data.get('additional_ip')
             return jsonify({"response":1,'valid_code':'valid','output_code':generate_code(target_lang=target_language,initial_code=code,additionnal_prompt=additional_ip)})
     return jsonify({"response":0})
-if __name__=='__main__':
-    app.run()
+app.run(debug=True,port=2022)
