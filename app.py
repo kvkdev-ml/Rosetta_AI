@@ -1,22 +1,21 @@
 from flask.app import Flask
 from flask import request,jsonify
 from flask.templating import render_template
-from google.genai import Client
+from ollama import generate
 import os as os
 app=Flask(__name__)
-client=Client(api_key=os.getenv('ROSETTA_API_KEY'))
-def check_code(code_snippet:str | None=None,model:str='gemini-3.6-flash'):
-    response = client.models.generate_content(model=f'{model}',contents=f"""
+def check_code(code_snippet:str | None=None,model:str='gpt-oss:120b-cloud'):
+    response = generate(model=f'{model}',prompt=f"""
 Detect whether the give snippet is a programming language or not.
 Return ONLY true if yes otherwise no and if nothing is given then return None.
 Do not explain anything.
 Code:{code_snippet}
     """)
-    return response.text
+    return response.response
 def generate_code(target_lang:str,initial_code:str,additionnal_prompt:str | None='No additional info'):
     if additionnal_prompt=='' or additionnal_prompt is None:
         additionnal_prompt='No Additional Info'
-    resp=client.models.generate_content(model='gemini-3.6-flash',contents=f'''
+    resp=generate(model='gpt-oss:120b-cloud',prompt=f'''
 You a Smart Code Transformer
 Convert the following code:
 {initial_code}
@@ -29,7 +28,7 @@ Instructions:
     ->No Need of backslashes or to mention the name of the code above, just return the code
 (Optional)Additional Information:{additionnal_prompt}
 ''')
-    return resp.text
+    return resp.response
 @app.route('/')
 def index():
     return render_template('index.html')
