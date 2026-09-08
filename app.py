@@ -8,7 +8,7 @@ client = Client(
     headers={'Authorization': 'Bearer ' + os.environ.get('OLLAMA_API_KEY')}
 )
 app=Flask(__name__)
-def check_code(code_snippet:str | None=None,model:str='gpt-oss:120b-cloud'):
+def check_code(code_snippet:str | None=None,model:str='gpt-oss:20b-cloud'):
     response = client.generate(model=f'{model}',prompt=f"""
 Detect whether the give snippet is a programming language or not.
 Return ONLY true if yes otherwise no and if nothing is given then return None.
