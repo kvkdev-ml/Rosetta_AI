@@ -1,11 +1,15 @@
 from flask.app import Flask
 from flask import request,jsonify
 from flask.templating import render_template
-from ollama import generate
+from ollama import Client
 import os as os
+client = Client(
+    host="https://ollama.com",
+    headers={'Authorization': 'Bearer ' + os.environ.get('OLLAMA_API_KEY')}
+)
 app=Flask(__name__)
 def check_code(code_snippet:str | None=None,model:str='gpt-oss:120b-cloud'):
-    response = generate(model=f'{model}',prompt=f"""
+    response = client.generate(model=f'{model}',prompt=f"""
 Detect whether the give snippet is a programming language or not.
 Return ONLY true if yes otherwise no and if nothing is given then return None.
 Do not explain anything.
@@ -15,7 +19,7 @@ Code:{code_snippet}
 def generate_code(target_lang:str,initial_code:str,additionnal_prompt:str | None='No additional info'):
     if additionnal_prompt=='' or additionnal_prompt is None:
         additionnal_prompt='No Additional Info'
-    resp=generate(model='gpt-oss:120b-cloud',prompt=f'''
+    resp=client.generate(model='gpt-oss:120b-cloud',prompt=f'''
 You a Smart Code Transformer
 Convert the following code:
 {initial_code}
