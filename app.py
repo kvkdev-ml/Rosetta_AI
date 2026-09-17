@@ -4,8 +4,7 @@ from flask.templating import render_template
 from ollama import Client
 import os as os
 client = Client(
-    host="https://ollama.com",
-    headers={'Authorization': 'Bearer ' + os.environ.get('OLLAMA_API_KEY')}
+    host="https://ollama.com"
 )
 app=Flask(__name__)
 def check_code(code_snippet:str | None=None,model:str='gpt-oss:20b-cloud'):
